@@ -31,10 +31,15 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 #lastUpdated,#rowCount{font-size:11px;color:var(--muted);font-family:var(--mono)}
 #rowCount{margin-top:2px;text-align:right}
 
-.filter-bar{display:flex;gap:10px;padding:16px 24px 0;flex-wrap:wrap}
-.filter-bar select{background:var(--surface);border:1px solid var(--border);color:var(--text2);font-family:var(--sans);font-size:13px;padding:7px 12px;border-radius:8px;cursor:pointer;outline:none;transition:border-color .15s}
-.filter-bar select:hover,.filter-bar select:focus{border-color:var(--blue)}
-.filter-bar label{font-size:11px;color:var(--muted);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;display:flex;flex-direction:column;gap:4px}
+.controls{display:flex;gap:12px;padding:16px 24px 0;flex-wrap:wrap;align-items:flex-end}
+.controls label{font-size:10px;color:var(--muted);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;display:flex;flex-direction:column;gap:4px}
+.controls select{background:var(--surface);border:1px solid var(--border);color:var(--text2);font-family:var(--sans);font-size:13px;padding:7px 12px;border-radius:8px;cursor:pointer;outline:none;transition:border-color .15s}
+.controls select:hover,.controls select:focus{border-color:var(--blue)}
+
+.seg-toggle{display:inline-flex;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:2px;gap:2px}
+.seg-btn{padding:6px 14px;background:transparent;border:none;border-radius:6px;color:var(--muted);font-family:var(--mono);font-size:11px;cursor:pointer;transition:all .15s;letter-spacing:.02em}
+.seg-btn:hover{color:var(--text2)}
+.seg-btn.active{background:var(--blue);color:#fff}
 
 #statusBanner{margin:16px 24px 0;padding:12px 16px;border-radius:8px;font-size:13px;font-family:var(--mono);display:none}
 .loading{background:var(--amber-d);border:1px solid rgba(245,158,11,.25);color:var(--amber)}
@@ -49,38 +54,32 @@ main{padding:0 24px}
 .kpi-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;font-family:var(--mono)}
 .kpi-val{font-size:24px;font-weight:700;font-family:var(--mono);color:var(--text);line-height:1}
 .kpi-sub{font-size:11px;color:var(--muted);margin-top:5px;font-family:var(--mono)}
-.kpi-val.green{color:var(--green)}.kpi-val.amber{color:var(--amber)}.kpi-val.red{color:var(--red)}.kpi-val.blue{color:var(--blue)}
 
 .sec-title{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;font-family:var(--mono);margin:28px 0 12px;display:flex;align-items:center;gap:10px}
 .sec-title::after{content:'';flex:1;height:1px;background:var(--border)}
 
-.charts-row{display:grid;grid-template-columns:1.2fr 1fr;gap:12px}
+.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .chart-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px}
 .chart-card h3{font-size:12px;color:var(--text2);font-weight:500;margin-bottom:12px}
-.chart-wrap{position:relative;height:220px}
-
-.legend-bar{display:flex;gap:16px;margin-bottom:12px;flex-wrap:wrap}
-.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
-.leg-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.chart-wrap{position:relative;height:230px}
+.chart-full{grid-column:1/-1}
 
 table{width:100%;border-collapse:collapse;font-size:13px}
 thead th{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-family:var(--mono);font-weight:400;padding:0 10px 10px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
-thead th:first-child,thead th:nth-child(2){text-align:left}
+thead th:first-child{text-align:left}
 tbody tr{border-bottom:1px solid var(--border);transition:background .1s}
 tbody tr:hover{background:rgba(59,130,246,.04)}
 tbody tr:last-child{border-bottom:none}
 tbody td{padding:10px;font-family:var(--mono);font-size:12px;text-align:right;color:var(--text2)}
-tbody td:first-child,tbody td:nth-child(2){text-align:left;font-family:var(--sans);font-weight:500;color:var(--text)}
+tbody td:first-child{text-align:left;font-family:var(--sans);font-weight:500;color:var(--text)}
 .tfoot td{border-top:2px solid var(--border);font-weight:700;color:var(--text)!important;padding-top:12px}
 
-.badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;font-family:var(--mono);font-weight:600;letter-spacing:.04em}
-.badge-green{background:var(--green-d);color:var(--green)}
-.badge-amber{background:var(--amber-d);color:var(--amber)}
-.badge-red{background:var(--red-d);color:var(--red)}
+.bar-cell{display:flex;align-items:center;gap:6px;justify-content:flex-end}
+.bar-track{width:60px;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px}
 
-.pct-bar{display:flex;align-items:center;gap:6px;justify-content:flex-end}
-.pct-track{width:50px;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
-.pct-fill{height:100%;border-radius:3px}
+.delta{font-size:11px;font-family:var(--mono);font-weight:600}
+.delta.up{color:var(--green)}.delta.dn{color:var(--red)}.delta.eq{color:var(--muted)}
 
 footer{margin-top:36px;padding:16px 24px 0;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);font-family:var(--mono);border-top:1px solid var(--border)}
 .refresh-btn{background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-family:var(--mono);font-size:11px;padding:6px 14px;cursor:pointer;transition:all .15s}
@@ -91,15 +90,15 @@ footer{margin-top:36px;padding:16px 24px 0;display:flex;justify-content:space-be
 @media(max-width:768px){
   .kpi-grid{grid-template-columns:1fr 1fr}
   .charts-row{grid-template-columns:1fr}
+  .chart-full{grid-column:auto}
   header{flex-direction:column;gap:10px;align-items:flex-start}
-  .filter-bar{flex-direction:column}
-  .filter-bar label{width:100%}
-  .filter-bar select{width:100%}
+  .controls{flex-direction:column;align-items:flex-start}
+  .controls select{width:100%}
 }
 @media(max-width:480px){
   .kpi-grid{grid-template-columns:1fr}
   main{padding:0 16px}
-  .filter-bar{padding:12px 16px 0}
+  .controls{padding:12px 16px 0}
   header{padding:16px}
 }
 </style>
@@ -120,47 +119,48 @@ footer{margin-top:36px;padding:16px 24px 0;display:flex;justify-content:space-be
   </div>
 </header>
 
-<div class="filter-bar">
+<div class="controls">
   <label>Periodo <select id="fPeriodo"><option value="all">Todos los periodos</option></select></label>
-  <label>Cliente <select id="fCliente"><option value="all">Todos los clientes</option></select></label>
+  <label>Agrupar por
+    <div class="seg-toggle" id="dateToggle">
+      <button class="seg-btn active" data-view="dia">Dia</button>
+      <button class="seg-btn" data-view="mes">Mes</button>
+      <button class="seg-btn" data-view="ano">Ano</button>
+    </div>
+  </label>
 </div>
 
 <div id="statusBanner"></div>
 
 <main>
-  <div class="kpi-grid" id="kpiRow1"></div>
-  <div class="kpi-grid" id="kpiRow2" style="margin-top:10px"></div>
+  <div class="kpi-grid" id="kpiGrid"></div>
 
-  <div class="sec-title">ingresos y precio</div>
-  <div class="legend-bar" id="legend"></div>
+  <div class="sec-title">tendencia de ingresos</div>
   <div class="charts-row">
     <div class="chart-card">
-      <h3>Ingresos diarios (USD)</h3>
+      <h3>Total vendido (USD)</h3>
       <div class="chart-wrap"><canvas id="revenueChart"></canvas></div>
     </div>
     <div class="chart-card">
-      <h3>Precio por kg (USD)</h3>
+      <h3>Precio promedio por kg (USD)</h3>
       <div class="chart-wrap"><canvas id="priceChart"></canvas></div>
     </div>
   </div>
 
-  <div class="sec-title">comparativa</div>
+  <div class="sec-title">tendencia de volumen</div>
   <div class="charts-row">
-    <div class="chart-card">
-      <h3>Volumen por periodo (kg)</h3>
-      <div class="chart-wrap"><canvas id="periodChart"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <h3>Distribucion por cliente</h3>
-      <div class="chart-wrap"><canvas id="clientChart"></canvas></div>
+    <div class="chart-card chart-full">
+      <h3>Peso neto (kg)</h3>
+      <div class="chart-wrap"><canvas id="weightChart"></canvas></div>
     </div>
   </div>
 
-  <div class="sec-title">resumen por periodo</div>
-  <div class="chart-card"><div class="table-scroll"><table><thead id="perHead"></thead><tbody id="perBody"></tbody></table></div></div>
-
-  <div class="sec-title">estado de liquidaciones</div>
-  <div class="chart-card"><div class="table-scroll"><table><thead id="liqHead"></thead><tbody id="liqBody"></tbody></table></div></div>
+  <div class="sec-title">comparativa por periodo</div>
+  <div class="chart-card">
+    <div class="table-scroll">
+      <table><thead id="compHead"></thead><tbody id="compBody"></tbody></table>
+    </div>
+  </div>
 </main>
 
 <footer>
@@ -171,26 +171,16 @@ footer{margin-top:36px;padding:16px 24px 0;display:flex;justify-content:space-be
 <script>
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQEll-BW_UewDrwyXnwNbl5qiyXSOAs5TSbs82yJltOzMy2qA_iSsMEhlVsfecD2hLzARX5SNCFcGA8/pub?gid=505628585&single=true&output=csv';
 
-const CLIENT_COLORS = {
-  'AGROEXPORTACIONES NATHANAEL SAC': '#3b82f6',
-  'EXPORTACIONES PAIJAN GREEN FARMS SAC': '#f59e0b'
-};
-const CLIENT_SHORT = {
-  'AGROEXPORTACIONES NATHANAEL SAC': 'Nathanael',
-  'EXPORTACIONES PAIJAN GREEN FARMS SAC': 'Paijan Green'
-};
-const FALLBACK_COLORS = ['#3b82f6','#f59e0b','#10b981','#8b5cf6','#06b6d4','#ef4444'];
-
-function cColor(name) { return CLIENT_COLORS[name] || FALLBACK_COLORS[Object.keys(CLIENT_COLORS).length % 6]; }
-function cShort(name) { return CLIENT_SHORT[name] || name.split(' ').slice(0,2).join(' '); }
+const MONTHS = ['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 
 const fmt = {
   usd: v => '$' + Number(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}),
-  usdK: v => v >= 1000 ? '$' + (v/1000).toFixed(1) + 'k' : '$' + v.toFixed(0),
-  kg: v => Number(v).toLocaleString('en-US',{maximumFractionDigits:1}) + ' kg',
+  usdShort: v => v >= 10000 ? '$'+(v/1000).toFixed(1)+'k' : v >= 1000 ? '$'+(v/1000).toFixed(1)+'k' : '$'+v.toFixed(0),
+  kg: v => Number(v).toLocaleString('en-US',{maximumFractionDigits:1})+' kg',
+  kgShort: v => v >= 1000 ? (v/1000).toFixed(1)+'k' : v.toFixed(0),
   n: v => Number(v).toLocaleString('en-US'),
-  price: v => '$' + Number(v).toFixed(2),
-  pct: v => Math.round(v) + '%'
+  price: v => '$'+Number(v).toFixed(2),
+  pct: v => (v >= 0 ? '+' : '') + v.toFixed(1) + '%'
 };
 
 function parseCSV(txt) {
@@ -211,381 +201,319 @@ function parseCSV(txt) {
   }).filter(r => r['Fecha'] && r['Peso Neto'] && !isNaN(parseFloat(r['Peso Neto'])));
 }
 
-function parseDate(d) {
-  if (!d) return new Date(0);
-  const p = d.split('/');
-  if (p.length === 3) return new Date(parseInt(p[2]), parseInt(p[1])-1, parseInt(p[0]));
-  return new Date(0);
-}
-
 function sortKey(d) {
   const p = d.split('/');
   if (p.length === 3) return p[2].padStart(4,'0') + p[1].padStart(2,'0') + p[0].padStart(2,'0');
-  if (p.length === 2) return '0000' + p[1].padStart(2,'0') + p[0].padStart(2,'0');
   return d;
 }
 
 function shortDate(d) {
   const p = d.split('/');
-  return p.length >= 2 ? p[0] + '/' + p[1] : d;
+  return p.length >= 2 ? p[0]+'/'+p[1] : d;
 }
 
 function shortPeriodo(p) {
-  const months = ['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
   const parts = p.split(' - ');
   if (parts.length !== 2) return p;
   const [d1, d2] = parts.map(s => s.trim().split('/'));
   if (d1.length !== 3 || d2.length !== 3) return p;
-  const m1 = months[parseInt(d1[1])] || d1[1];
-  const m2 = months[parseInt(d2[1])] || d2[1];
-  const y1 = d1[2].slice(-2);
-  const y2 = d2[2].slice(-2);
-  if (y1 === y2) return m1 + '-' + m2 + ' ' + y1;
-  return m1 + ' ' + y1 + '-' + m2 + ' ' + y2;
+  const m1 = MONTHS[parseInt(d1[1])] || d1[1];
+  const m2 = MONTHS[parseInt(d2[1])] || d2[1];
+  const y1 = d1[2].slice(-2), y2 = d2[2].slice(-2);
+  return y1 === y2 ? m1+'-'+m2+' '+y1 : m1+' '+y1+'-'+m2+' '+y2;
 }
+
+function monthLabel(key) {
+  const [m, y] = key.split('/');
+  return MONTHS[parseInt(m)] + ' ' + y.slice(-2);
+}
+
+// --- Aggregation ---
+
+function aggregate(rows, view) {
+  const map = {};
+  rows.forEach(r => {
+    const p = r['Fecha'].split('/');
+    let key;
+    if (view === 'dia') key = r['Fecha'];
+    else if (view === 'mes') key = p[1].padStart(2,'0') + '/' + p[2];
+    else key = p[2];
+    if (!map[key]) map[key] = { key, kg: 0, usd: 0, cajas: 0, days: new Set() };
+    map[key].kg += parseFloat(r['Peso Neto']) || 0;
+    map[key].usd += parseFloat(r['Total Dia']) || 0;
+    map[key].cajas += parseInt(r['Num Cajas']) || 0;
+    map[key].days.add(r['Fecha']);
+  });
+  const arr = Object.values(map);
+  arr.forEach(d => { d.price = d.kg > 0 ? d.usd / d.kg : 0; d.numDays = d.days.size; });
+  arr.sort((a, b) => {
+    if (view === 'dia') return sortKey(a.key).localeCompare(sortKey(b.key));
+    if (view === 'mes') { const [ma,ya] = a.key.split('/'); const [mb,yb] = b.key.split('/'); return (ya+ma).localeCompare(yb+mb); }
+    return a.key.localeCompare(b.key);
+  });
+  return arr;
+}
+
+function labelFor(key, view) {
+  if (view === 'dia') return shortDate(key);
+  if (view === 'mes') return monthLabel(key);
+  return key;
+}
+
+// --- State ---
 
 let allRows = [];
+let dateView = 'dia';
 let charts = {};
 
-function populateFilters(rows) {
-  const periodos = [...new Set(rows.map(r => r['Periodo']))].sort((a,b) => {
-    const pa = a.split(' - ')[0]; const pb = b.split(' - ')[0];
-    return sortKey(pa).localeCompare(sortKey(pb));
-  });
-  const clientes = [...new Set(rows.map(r => r['Cliente']))].sort();
-
-  const fP = document.getElementById('fPeriodo');
-  const fC = document.getElementById('fCliente');
-  const prevP = fP.value, prevC = fC.value;
-
-  fP.innerHTML = '<option value="all">Todos los periodos</option>' +
-    periodos.map(p => `<option value="${p}">${shortPeriodo(p)}</option>`).join('');
-  fC.innerHTML = '<option value="all">Todos los clientes</option>' +
-    clientes.map(c => `<option value="${c}">${cShort(c)}</option>`).join('');
-
-  if ([...fP.options].some(o => o.value === prevP)) fP.value = prevP;
-  if ([...fC.options].some(o => o.value === prevC)) fC.value = prevC;
-}
-
 function getFiltered() {
-  let rows = allRows;
   const fP = document.getElementById('fPeriodo').value;
-  const fC = document.getElementById('fCliente').value;
-  if (fP !== 'all') rows = rows.filter(r => r['Periodo'] === fP);
-  if (fC !== 'all') rows = rows.filter(r => r['Cliente'] === fC);
-  return rows;
+  return fP === 'all' ? allRows : allRows.filter(r => r['Periodo'] === fP);
 }
 
-function processAndRender() {
+function populateFilters(rows) {
+  const periodos = [...new Set(rows.map(r => r['Periodo']))].sort((a, b) => {
+    return sortKey(a.split(' - ')[0]).localeCompare(sortKey(b.split(' - ')[0]));
+  });
+  const sel = document.getElementById('fPeriodo');
+  const prev = sel.value;
+  sel.innerHTML = '<option value="all">Todos los periodos</option>' +
+    periodos.map(p => '<option value="'+p+'">'+shortPeriodo(p)+'</option>').join('');
+  if ([...sel.options].some(o => o.value === prev)) sel.value = prev;
+}
+
+// --- Render ---
+
+function renderAll() {
   const rows = getFiltered();
   if (!rows.length) return;
+  const data = aggregate(rows, dateView);
 
-  const totalRev = rows.reduce((s,r) => s + (parseFloat(r['Total Dia']) || 0), 0);
-  const totalKg = rows.reduce((s,r) => s + (parseFloat(r['Peso Neto']) || 0), 0);
+  const totalUsd = rows.reduce((s,r) => s + (parseFloat(r['Total Dia']) || 0), 0);
+  const totalKg  = rows.reduce((s,r) => s + (parseFloat(r['Peso Neto']) || 0), 0);
   const totalCajas = rows.reduce((s,r) => s + (parseInt(r['Num Cajas']) || 0), 0);
-  const avgPrice = totalKg > 0 ? totalRev / totalKg : 0;
+  const avgPrice = totalKg > 0 ? totalUsd / totalKg : 0;
+  const numDays = new Set(rows.map(r => r['Fecha'])).size;
+  const numPeriods = new Set(rows.map(r => r['Periodo'])).size;
 
-  const liqMap = new Map();
-  rows.forEach(r => {
-    const tl = r['Total Liquidacion'];
-    if (!tl || tl === '-' || tl === '0') return;
-    const key = r['CRU'] + '|' + tl;
-    if (!liqMap.has(key)) {
-      liqMap.set(key, {
-        cru: r['CRU'], cliente: r['Cliente'],
-        total: parseFloat(tl) || 0,
-        detraccion: parseFloat(r['Detraccion']) || 0,
-        saldo: parseFloat(r['Saldo por Cancelar']) || 0,
-        fechaMin: r['Fecha'], fechaMax: r['Fecha'],
-        periodo: r['Periodo']
-      });
-    } else {
-      const e = liqMap.get(key);
-      if (sortKey(r['Fecha']) < sortKey(e.fechaMin)) e.fechaMin = r['Fecha'];
-      if (sortKey(r['Fecha']) > sortKey(e.fechaMax)) e.fechaMax = r['Fecha'];
-    }
-  });
-
-  const liqs = [...liqMap.values()].sort((a,b) => sortKey(a.fechaMin).localeCompare(sortKey(b.fechaMin)));
-  const totalLiq = liqs.reduce((s,l) => s + l.total, 0);
-  const totalDet = liqs.reduce((s,l) => s + l.detraccion, 0);
-  const totalSaldo = liqs.reduce((s,l) => s + l.saldo, 0);
-  const cobrado = liqs.filter(l => l.saldo === 0).reduce((s,l) => s + l.total, 0);
-
-  const sinLiqRows = rows.filter(r => !r['Total Liquidacion'] || r['Total Liquidacion'] === '-');
-  const sinLiqTotal = sinLiqRows.reduce((s,r) => s + (parseFloat(r['Total Dia']) || 0), 0);
-
-  renderKPIs(totalRev, totalKg, avgPrice, totalCajas, totalLiq, totalDet, cobrado, totalSaldo, sinLiqTotal);
-
-  const clientes = [...new Set(rows.map(r => r['Cliente']))].sort();
-  document.getElementById('legend').innerHTML = clientes.map(c =>
-    `<div class="legend-item"><span class="leg-dot" style="background:${cColor(c)}"></span>${cShort(c)}</div>`
-  ).join('');
-
-  renderRevenueChart(rows, clientes);
-  renderPriceChart(rows, clientes);
-  renderPeriodChart(rows, clientes);
-  renderClientChart(rows, clientes, totalRev);
-  renderPeriodTable(rows, clientes);
-  renderLiqTable(liqs, sinLiqTotal);
+  renderKPIs(totalUsd, totalKg, avgPrice, totalCajas, numDays, numPeriods);
+  renderRevenueChart(data);
+  renderPriceChart(data);
+  renderWeightChart(data);
+  renderComparisonTable(allRows);
 }
 
-function renderKPIs(rev, kg, price, cajas, liq, det, cobrado, saldo, sinLiq) {
-  document.getElementById('kpiRow1').innerHTML = `
+function renderKPIs(usd, kg, price, cajas, days, periods) {
+  const avgDaily = days > 0 ? usd / days : 0;
+  const avgDailyKg = days > 0 ? kg / days : 0;
+  document.getElementById('kpiGrid').innerHTML = `
     <div class="kpi">
       <div class="kpi-icon" style="background:var(--blue-d)">&#128176;</div>
-      <div class="kpi-label">Total facturado</div>
-      <div class="kpi-val">${fmt.usd(rev)}</div>
-      <div class="kpi-sub">USD</div>
+      <div class="kpi-label">Total vendido</div>
+      <div class="kpi-val">${fmt.usd(usd)}</div>
+      <div class="kpi-sub">${fmt.usd(avgDaily)} / dia prom</div>
     </div>
     <div class="kpi">
       <div class="kpi-icon" style="background:var(--green-d)">&#9878;</div>
-      <div class="kpi-label">Peso neto</div>
+      <div class="kpi-label">Peso neto total</div>
       <div class="kpi-val">${fmt.kg(kg)}</div>
-      <div class="kpi-sub">${fmt.n(cajas)} cajas</div>
+      <div class="kpi-sub">${fmt.kg(avgDailyKg)} / dia prom</div>
     </div>
     <div class="kpi">
       <div class="kpi-icon" style="background:var(--amber-d)">&#9733;</div>
       <div class="kpi-label">Precio promedio</div>
-      <div class="kpi-val">${fmt.price(price)}</div>
-      <div class="kpi-sub">USD / kg</div>
+      <div class="kpi-val">${fmt.price(price)}/kg</div>
+      <div class="kpi-sub">${fmt.n(cajas)} cajas</div>
     </div>
     <div class="kpi">
       <div class="kpi-icon" style="background:rgba(139,92,246,.12)">&#128197;</div>
-      <div class="kpi-label">Dias registrados</div>
-      <div class="kpi-val">${[...new Set(getFiltered().map(r=>r['Fecha']))].length}</div>
-      <div class="kpi-sub">${[...new Set(getFiltered().map(r=>r['Periodo']))].length} periodos</div>
-    </div>`;
-
-  const porCobrar = saldo + sinLiq;
-  document.getElementById('kpiRow2').innerHTML = `
-    <div class="kpi">
-      <div class="kpi-label">Total liquidado</div>
-      <div class="kpi-val" style="font-size:20px">${fmt.usd(liq)}</div>
-      <div class="kpi-sub">de ${fmt.usd(rev)} facturado</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Cobrado</div>
-      <div class="kpi-val green" style="font-size:20px">${fmt.usd(cobrado)}</div>
-      <div class="kpi-sub">saldo = 0</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Pendiente de cobro</div>
-      <div class="kpi-val amber" style="font-size:20px">${fmt.usd(porCobrar)}</div>
-      <div class="kpi-sub">${sinLiq > 0 ? fmt.usd(sinLiq) + ' sin liquidar' : 'liquidaciones abiertas'}</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Detracciones</div>
-      <div class="kpi-val" style="font-size:20px;color:var(--muted)">${fmt.usd(det)}</div>
-      <div class="kpi-sub">${liq > 0 ? fmt.pct(det/liq*100) + ' del liquidado' : '-'}</div>
+      <div class="kpi-label">Dias de cosecha</div>
+      <div class="kpi-val">${days}</div>
+      <div class="kpi-sub">${periods} periodo${periods !== 1 ? 's' : ''}</div>
     </div>`;
 }
 
-function renderRevenueChart(rows, clientes) {
-  const dates = [...new Set(rows.map(r => r['Fecha']))].sort((a,b) => sortKey(a).localeCompare(sortKey(b)));
-  const datasets = clientes.map(c => {
-    const byDate = {};
-    rows.filter(r => r['Cliente'] === c).forEach(r => {
-      byDate[r['Fecha']] = (byDate[r['Fecha']] || 0) + (parseFloat(r['Total Dia']) || 0);
-    });
-    return {
-      label: cShort(c), data: dates.map(d => byDate[d] || 0),
-      backgroundColor: cColor(c), borderRadius: 3, borderSkipped: false
-    };
-  });
+function renderRevenueChart(data) {
+  const labels = data.map(d => labelFor(d.key, dateView));
   if (charts.revenue) charts.revenue.destroy();
   charts.revenue = new Chart(document.getElementById('revenueChart'), {
     type: 'bar',
-    data: { labels: dates.map(shortDate), datasets },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: { mode: 'index', callbacks: {
-          footer: items => 'Total: ' + fmt.usd(items.reduce((s,i) => s + i.parsed.y, 0))
-        }}
-      },
-      scales: {
-        x: { stacked: true, ticks: { color: '#475569', font: { size: 10 }, maxRotation: 45 }, grid: { display: false } },
-        y: { stacked: true, ticks: { color: '#475569', font: { size: 10 }, callback: v => fmt.usdK(v) }, grid: { color: 'rgba(148,163,184,.06)' } }
-      }
-    }
-  });
-}
-
-function renderPriceChart(rows, clientes) {
-  const dates = [...new Set(rows.map(r => r['Fecha']))].sort((a,b) => sortKey(a).localeCompare(sortKey(b)));
-  const datasets = clientes.map((c, i) => {
-    const byDate = {};
-    rows.filter(r => r['Cliente'] === c).forEach(r => { byDate[r['Fecha']] = parseFloat(r['Precio']) || 0; });
-    return {
-      label: cShort(c), data: dates.map(d => byDate[d] || null),
-      borderColor: cColor(c), backgroundColor: 'transparent',
-      borderWidth: 2.5, pointRadius: 3, pointBackgroundColor: cColor(c),
-      tension: 0.3, spanGaps: false,
-      borderDash: i === 0 ? [] : [5, 3]
-    };
-  });
-  if (charts.price) charts.price.destroy();
-  charts.price = new Chart(document.getElementById('priceChart'), {
-    type: 'line',
-    data: { labels: dates.map(shortDate), datasets },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: ctx => cShort(clientes[ctx.datasetIndex]) + ': ' + fmt.price(ctx.parsed.y) + '/kg' } }
-      },
-      scales: {
-        x: { ticks: { color: '#475569', font: { size: 10 }, maxRotation: 45 }, grid: { display: false } },
-        y: { ticks: { color: '#475569', font: { size: 10 }, callback: v => '$' + v.toFixed(1) }, grid: { color: 'rgba(148,163,184,.06)' }, beginAtZero: false }
-      }
-    }
-  });
-}
-
-function renderPeriodChart(rows, clientes) {
-  const periodos = [...new Set(rows.map(r => r['Periodo']))].sort((a,b) => {
-    const pa = a.split(' - ')[0]; const pb = b.split(' - ')[0];
-    return sortKey(pa).localeCompare(sortKey(pb));
-  });
-  const datasets = clientes.map(c => {
-    const byP = {};
-    rows.filter(r => r['Cliente'] === c).forEach(r => {
-      byP[r['Periodo']] = (byP[r['Periodo']] || 0) + (parseFloat(r['Peso Neto']) || 0);
-    });
-    return {
-      label: cShort(c), data: periodos.map(p => byP[p] || 0),
-      backgroundColor: cColor(c), borderRadius: 4, borderSkipped: false, barPercentage: 0.7
-    };
-  });
-  if (charts.period) charts.period.destroy();
-  charts.period = new Chart(document.getElementById('periodChart'), {
-    type: 'bar',
-    data: { labels: periodos.map(shortPeriodo), datasets },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: ctx => cShort(clientes[ctx.datasetIndex]) + ': ' + fmt.kg(ctx.parsed.y) } }
-      },
-      scales: {
-        x: { ticks: { color: '#475569', font: { size: 11 } }, grid: { display: false } },
-        y: { ticks: { color: '#475569', font: { size: 10 }, callback: v => (v/1000).toFixed(0) + 'k' }, grid: { color: 'rgba(148,163,184,.06)' } }
-      }
-    }
-  });
-}
-
-function renderClientChart(rows, clientes, totalRev) {
-  const revByClient = {};
-  clientes.forEach(c => { revByClient[c] = rows.filter(r => r['Cliente'] === c).reduce((s,r) => s + (parseFloat(r['Total Dia']) || 0), 0); });
-  if (charts.client) charts.client.destroy();
-  charts.client = new Chart(document.getElementById('clientChart'), {
-    type: 'doughnut',
     data: {
-      labels: clientes.map(cShort),
+      labels,
       datasets: [{
-        data: clientes.map(c => revByClient[c]),
-        backgroundColor: clientes.map(cColor),
-        borderColor: 'transparent', borderWidth: 2, hoverOffset: 8
+        label: 'Total USD',
+        data: data.map(d => d.usd),
+        backgroundColor: 'rgba(59,130,246,.7)',
+        borderRadius: 3, borderSkipped: false
       }]
     },
     options: {
-      responsive: true, maintainAspectRatio: false, cutout: '65%',
+      responsive: true, maintainAspectRatio: false,
       plugins: {
-        legend: { position: 'bottom', labels: { color: '#94a3b8', font: { size: 12, family: 'Inter' }, padding: 16, usePointStyle: true, pointStyleWidth: 10 } },
-        tooltip: { callbacks: { label: ctx => cShort(clientes[ctx.dataIndex]) + ': ' + fmt.usd(ctx.parsed) + ' (' + fmt.pct(ctx.parsed / totalRev * 100) + ')' } }
+        legend: { display: false },
+        tooltip: { callbacks: {
+          title: ctx => dateView === 'dia' ? ctx[0].label : ctx[0].label,
+          label: ctx => 'Total: ' + fmt.usd(ctx.parsed.y),
+          afterLabel: ctx => dateView !== 'dia' ? data[ctx.dataIndex].numDays + ' dias' : ''
+        }}
+      },
+      scales: {
+        x: { ticks: { color: '#475569', font: { size: 10 }, maxRotation: 45 }, grid: { display: false } },
+        y: { ticks: { color: '#475569', font: { size: 10 }, callback: v => fmt.usdShort(v) }, grid: { color: 'rgba(148,163,184,.06)' } }
       }
     }
   });
 }
 
-function renderPeriodTable(rows, clientes) {
-  document.getElementById('perHead').innerHTML = `<tr>
-    <th>Periodo</th><th>Cliente</th><th>Dias</th><th>Cajas</th><th>Peso Neto</th><th>Total USD</th><th>Precio Prom</th><th>% Total</th>
-  </tr>`;
-
-  const totalRev = rows.reduce((s,r) => s + (parseFloat(r['Total Dia']) || 0), 0);
-  const periodos = [...new Set(rows.map(r => r['Periodo']))].sort((a,b) => {
-    const pa = a.split(' - ')[0]; const pb = b.split(' - ')[0];
-    return sortKey(pa).localeCompare(sortKey(pb));
+function renderPriceChart(data) {
+  const labels = data.map(d => labelFor(d.key, dateView));
+  if (charts.price) charts.price.destroy();
+  charts.price = new Chart(document.getElementById('priceChart'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Precio/kg',
+        data: data.map(d => d.price),
+        borderColor: '#f59e0b',
+        backgroundColor: 'rgba(245,158,11,.08)',
+        borderWidth: 2.5, pointRadius: dateView === 'dia' ? 3 : 5,
+        pointBackgroundColor: '#f59e0b',
+        tension: 0.3, fill: true
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: {
+          label: ctx => 'Precio: ' + fmt.price(ctx.parsed.y) + '/kg',
+          afterLabel: ctx => dateView !== 'dia' ? data[ctx.dataIndex].numDays + ' dias · ' + fmt.kg(data[ctx.dataIndex].kg) : ''
+        }}
+      },
+      scales: {
+        x: { ticks: { color: '#475569', font: { size: 10 }, maxRotation: 45 }, grid: { display: false } },
+        y: { ticks: { color: '#475569', font: { size: 10 }, callback: v => '$'+v.toFixed(1) }, grid: { color: 'rgba(148,163,184,.06)' } }
+      }
+    }
   });
-
-  let html = '';
-  let tDias = 0, tCajas = 0, tKg = 0, tUsd = 0;
-
-  periodos.forEach(p => {
-    const pRows = rows.filter(r => r['Periodo'] === p);
-    const pClientes = [...new Set(pRows.map(r => r['Cliente']))].sort();
-    pClientes.forEach((c, ci) => {
-      const cRows = pRows.filter(r => r['Cliente'] === c);
-      const dias = new Set(cRows.map(r => r['Fecha'])).size;
-      const cajas = cRows.reduce((s,r) => s + (parseInt(r['Num Cajas']) || 0), 0);
-      const kg = cRows.reduce((s,r) => s + (parseFloat(r['Peso Neto']) || 0), 0);
-      const usd = cRows.reduce((s,r) => s + (parseFloat(r['Total Dia']) || 0), 0);
-      const avg = kg > 0 ? usd / kg : 0;
-      const pct = totalRev > 0 ? usd / totalRev * 100 : 0;
-      tDias += dias; tCajas += cajas; tKg += kg; tUsd += usd;
-      html += `<tr>
-        <td>${ci === 0 ? shortPeriodo(p) : ''}</td>
-        <td><span class="leg-dot" style="background:${cColor(c)};display:inline-block;width:8px;height:8px;border-radius:3px;margin-right:6px;vertical-align:middle"></span>${cShort(c)}</td>
-        <td>${dias}</td><td>${fmt.n(cajas)}</td><td>${fmt.kg(kg)}</td>
-        <td>${fmt.usd(usd)}</td><td>${fmt.price(avg)}/kg</td>
-        <td><div class="pct-bar"><div class="pct-track"><div class="pct-fill" style="width:${pct}%;background:${cColor(c)}"></div></div>${fmt.pct(pct)}</div></td>
-      </tr>`;
-    });
-  });
-
-  const tAvg = tKg > 0 ? tUsd / tKg : 0;
-  html += `<tr class="tfoot">
-    <td>Total</td><td></td><td>${tDias}</td><td>${fmt.n(tCajas)}</td><td>${fmt.kg(tKg)}</td>
-    <td>${fmt.usd(tUsd)}</td><td>${fmt.price(tAvg)}/kg</td><td>100%</td>
-  </tr>`;
-
-  document.getElementById('perBody').innerHTML = html;
 }
 
-function renderLiqTable(liqs, sinLiqTotal) {
-  document.getElementById('liqHead').innerHTML = `<tr>
-    <th>CRU</th><th>Cliente</th><th>Rango</th><th>Liquidacion</th><th>Detraccion</th><th>Saldo</th><th>Estado</th>
+function renderWeightChart(data) {
+  const labels = data.map(d => labelFor(d.key, dateView));
+  if (charts.weight) charts.weight.destroy();
+  charts.weight = new Chart(document.getElementById('weightChart'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Peso Neto (kg)',
+        data: data.map(d => d.kg),
+        backgroundColor: 'rgba(16,185,129,.65)',
+        borderRadius: 3, borderSkipped: false
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: {
+          label: ctx => 'Peso: ' + fmt.kg(ctx.parsed.y),
+          afterLabel: ctx => fmt.n(data[ctx.dataIndex].cajas) + ' cajas' + (dateView !== 'dia' ? ' · ' + data[ctx.dataIndex].numDays + ' dias' : '')
+        }}
+      },
+      scales: {
+        x: { ticks: { color: '#475569', font: { size: 10 }, maxRotation: 45 }, grid: { display: false } },
+        y: { ticks: { color: '#475569', font: { size: 10 }, callback: v => fmt.kgShort(v) }, grid: { color: 'rgba(148,163,184,.06)' } }
+      }
+    }
+  });
+}
+
+function renderComparisonTable(rows) {
+  document.getElementById('compHead').innerHTML = `<tr>
+    <th style="text-align:left">Periodo</th>
+    <th>Dias</th><th>Cajas</th>
+    <th>Peso Neto</th><th>Kg/Dia</th>
+    <th>Total USD</th><th>USD/Dia</th>
+    <th>Precio Prom</th>
   </tr>`;
 
-  let html = liqs.map(l => {
-    const estado = l.saldo === 0
-      ? '<span class="badge badge-green">Cobrado</span>'
-      : '<span class="badge badge-amber">Pendiente</span>';
+  const periodos = [...new Set(rows.map(r => r['Periodo']))].sort((a, b) =>
+    sortKey(a.split(' - ')[0]).localeCompare(sortKey(b.split(' - ')[0]))
+  );
+
+  const stats = periodos.map(p => {
+    const pr = rows.filter(r => r['Periodo'] === p);
+    const dias = new Set(pr.map(r => r['Fecha'])).size;
+    const cajas = pr.reduce((s,r) => s + (parseInt(r['Num Cajas']) || 0), 0);
+    const kg = pr.reduce((s,r) => s + (parseFloat(r['Peso Neto']) || 0), 0);
+    const usd = pr.reduce((s,r) => s + (parseFloat(r['Total Dia']) || 0), 0);
+    const price = kg > 0 ? usd / kg : 0;
+    return { periodo: p, dias, cajas, kg, usd, price, kgDia: dias > 0 ? kg/dias : 0, usdDia: dias > 0 ? usd/dias : 0 };
+  });
+
+  const maxKg = Math.max(...stats.map(s => s.kg));
+  const maxUsd = Math.max(...stats.map(s => s.usd));
+  const maxPrice = Math.max(...stats.map(s => s.price));
+  const tDias = stats.reduce((s,r) => s+r.dias, 0);
+  const tCajas = stats.reduce((s,r) => s+r.cajas, 0);
+  const tKg = stats.reduce((s,r) => s+r.kg, 0);
+  const tUsd = stats.reduce((s,r) => s+r.usd, 0);
+
+  let html = stats.map((s, i) => {
+    const prev = i > 0 ? stats[i-1] : null;
+    const dKg = prev ? ((s.kgDia - prev.kgDia) / prev.kgDia * 100) : null;
+    const dUsd = prev ? ((s.usdDia - prev.usdDia) / prev.usdDia * 100) : null;
+    const dPrice = prev ? ((s.price - prev.price) / prev.price * 100) : null;
+    const kgPct = maxKg > 0 ? s.kg / maxKg * 100 : 0;
+    const usdPct = maxUsd > 0 ? s.usd / maxUsd * 100 : 0;
+    const pricePct = maxPrice > 0 ? s.price / maxPrice * 100 : 0;
+
+    function delta(v) {
+      if (v === null) return '';
+      const cls = v > 0 ? 'up' : v < 0 ? 'dn' : 'eq';
+      return ' <span class="delta '+cls+'">' + fmt.pct(v) + '</span>';
+    }
+
     return `<tr>
-      <td style="font-size:11px">${l.cru}</td>
-      <td><span class="leg-dot" style="background:${cColor(l.cliente)};display:inline-block;width:8px;height:8px;border-radius:3px;margin-right:6px;vertical-align:middle"></span>${cShort(l.cliente)}</td>
-      <td>${shortDate(l.fechaMin)} - ${shortDate(l.fechaMax)}</td>
-      <td>${fmt.usd(l.total)}</td>
-      <td>${l.detraccion > 0 ? fmt.usd(l.detraccion) : '-'}</td>
-      <td style="color:${l.saldo > 0 ? 'var(--amber)' : 'var(--green)'};font-weight:${l.saldo > 0 ? '600' : '400'}">${l.saldo > 0 ? fmt.usd(l.saldo) : '$0.00'}</td>
-      <td>${estado}</td>
+      <td>${shortPeriodo(s.periodo)}</td>
+      <td>${s.dias}</td>
+      <td>${fmt.n(s.cajas)}</td>
+      <td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:${kgPct}%;background:var(--green)"></div></div>${fmt.kg(s.kg)}</div></td>
+      <td>${fmt.kg(s.kgDia)}${delta(dKg)}</td>
+      <td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:${usdPct}%;background:var(--blue)"></div></div>${fmt.usd(s.usd)}</div></td>
+      <td>${fmt.usd(s.usdDia)}${delta(dUsd)}</td>
+      <td><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:${pricePct}%;background:var(--amber)"></div></div>${fmt.price(s.price)}${delta(dPrice)}</div></td>
     </tr>`;
   }).join('');
 
-  if (sinLiqTotal > 0) {
-    html += `<tr>
-      <td style="font-size:11px">-</td><td>Sin asignar</td><td>-</td>
-      <td>${fmt.usd(sinLiqTotal)}</td><td>-</td>
-      <td style="color:var(--red);font-weight:600">${fmt.usd(sinLiqTotal)}</td>
-      <td><span class="badge badge-red">Sin liquidar</span></td>
-    </tr>`;
-  }
-
-  const totalLiq = liqs.reduce((s,l) => s + l.total, 0) + sinLiqTotal;
-  const totalDet = liqs.reduce((s,l) => s + l.detraccion, 0);
-  const totalSaldo = liqs.reduce((s,l) => s + l.saldo, 0) + sinLiqTotal;
+  const tPrice = tKg > 0 ? tUsd / tKg : 0;
   html += `<tr class="tfoot">
-    <td>Total</td><td></td><td>${liqs.length} liquidaciones</td>
-    <td>${fmt.usd(totalLiq)}</td><td>${fmt.usd(totalDet)}</td>
-    <td style="color:var(--amber);font-weight:700">${fmt.usd(totalSaldo)}</td><td></td>
+    <td>Total</td>
+    <td>${tDias}</td><td>${fmt.n(tCajas)}</td>
+    <td>${fmt.kg(tKg)}</td><td>${fmt.kg(tDias > 0 ? tKg/tDias : 0)}</td>
+    <td>${fmt.usd(tUsd)}</td><td>${fmt.usd(tDias > 0 ? tUsd/tDias : 0)}</td>
+    <td>${fmt.price(tPrice)}</td>
   </tr>`;
 
-  document.getElementById('liqBody').innerHTML = html;
+  document.getElementById('compBody').innerHTML = html;
 }
+
+// --- Controls ---
+
+document.getElementById('dateToggle').addEventListener('click', e => {
+  const btn = e.target.closest('.seg-btn');
+  if (!btn) return;
+  document.querySelectorAll('#dateToggle .seg-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  dateView = btn.dataset.view;
+  renderAll();
+});
+
+document.getElementById('fPeriodo').addEventListener('change', renderAll);
+
+// --- Load ---
 
 function showStatus(type, msg) {
   const b = document.getElementById('statusBanner');
@@ -602,7 +530,7 @@ async function loadData() {
     allRows = rows;
     populateFilters(rows);
     document.getElementById('statusBanner').style.display = 'none';
-    processAndRender();
+    renderAll();
     document.getElementById('lastUpdated').textContent =
       'Actualizado ' + new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
     document.getElementById('rowCount').textContent = rows.length + ' registros';
@@ -611,9 +539,6 @@ async function loadData() {
     document.getElementById('lastUpdated').textContent = 'Error al cargar';
   }
 }
-
-document.getElementById('fPeriodo').addEventListener('change', processAndRender);
-document.getElementById('fCliente').addEventListener('change', processAndRender);
 
 loadData();
 setInterval(loadData, 5 * 60 * 1000);
